@@ -102,8 +102,8 @@ PAYROLL_ID int NOT NULL,
 ADDRESS VARCHAR(250));
 
 ALTER TABLE EMPLOYEE_DETAILS ADD PHONE_NUMBER INT
+ALTER TABLE EMPLOYEE_DETAILS ADD PAYROLL_ID INT
 ALTER TABLE EMPLOYEE_PAYROLL ADD PINCODE INT
-
 
 SELECT *FROM EMPLOYEE_DETAILS;
 
@@ -113,7 +113,30 @@ ALTER TABLE EMPLOYEE_PAYROLL ADD CONSTRAINT FK_EMPLOYEE_PAYROLL FOREIGN KEY(PINC
 
 /*-----UC12-----*/
 
-select Emp_id,Emp_Name,Income_Tax from EmployeeDetails,employee_payroll where EmployeeDetails.Payroll_id=employee_payroll.id;
+SELECT Emp_Name,TAXABLE_PAY from Employee_Details,employee_payRoll where EMPLOYEE_DETAILS.PAYROLL_ID =employee_PayRoll.id;
 
-select Emp_id,Emp_Name,Income_Tax from EmployeeDetails,employee_payroll where Start_Date between CAST('1900-01-01' as date) and GETDATE() and  
-EmployeeDetails.Payroll_id=employee_payroll.id;
+
+SELECT Emp_Name,TAXABLE_PAY from Employee_Details,employee_PayRoll where Start between CAST('2022-06-07' as date) and GETDATE() and  
+
+EMPLOYEE_DETAILS.PAYROLL_ID=employee_PayRoll.id;
+
+SELECT *from Employee_Payroll;
+
+----STORED PROCEDURE----
+GO
+CREATE PROCEDURE ConnectivityCheck1
+AS
+BEGIN
+SELECT * FROM EMPLOYEE_PAYROLL
+END
+
+GO
+CREATE OR ALTER PROCEDURE [dbo].[Sp_Employee_Payroll]
+(@NAME VARCHAR(25), @PHONENO VARCHAR(30), @ADDRESS VARCHAR(250))
+AS
+
+BEGIN
+INSERT INTO Employee_PayRoll VALUES('@NAME','@PHONENO','@ADDRESS')
+END
+
+SELECT *from Employee_Payroll;
